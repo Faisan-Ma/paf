@@ -7,12 +7,12 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-
+import com.jersy.bean.PowerInterruptionDeleteBean;
 import com.jersy.bean.PowerInterruptionInsertBean;
+import com.jersy.dao.PowerInterruptionDeleteDao;
 import com.jersy.dao.PowerInterruptionInsertDao;
 
 
@@ -43,5 +43,34 @@ public class PowerInterruptionService {
 
 			return str;
 		}
+		
+		
+		// delete user
+		@Path("/deleteinterruptiondetails")
+		@POST
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		public String deleteUser(String s) {
+
+			try {
+
+				ObjectMapper objectMapper = new ObjectMapper();
+				PowerInterruptionDeleteBean powerInterruptionDeleteBean = objectMapper.readValue(s, PowerInterruptionDeleteBean.class);
+
+				if (PowerInterruptionDeleteDao.PowerInterruptionDelete(powerInterruptionDeleteBean) == true) {
+
+					return "user delete successfully";
+
+				} else {
+					return "remove failed";
+				}
+
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+
+			return "fail";
+		}
+
 
 }

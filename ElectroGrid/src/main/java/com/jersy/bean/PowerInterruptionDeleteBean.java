@@ -2,14 +2,16 @@ package com.jersy.bean;
 
 public class PowerInterruptionDeleteBean {
 
-	private int interruptionid;
+	private static int interruptionid;
 
-	public int getInterruptionid() {
+	
+	
+	public static int getInterruptionid() {
 		return interruptionid;
 	}
 
 	public void setInterruptionid(int interruptionid) {
-		this.interruptionid = interruptionid;
+		PowerInterruptionDeleteBean.interruptionid = interruptionid;
 	}
 	
 	
