@@ -3,6 +3,7 @@ package com.jersy.services;
 import java.io.IOException;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -50,9 +51,9 @@ public class PowerInterruptionService {
 		}
 		
 		
-		// delete user
+		//delete user
 		@Path("/deleteinterruptiondetails")
-		@POST
+		@DELETE
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
 		public String deleteUser(String s) {
@@ -77,9 +78,9 @@ public class PowerInterruptionService {
 			return "fail";
 		}
 		
-		// change password
+		//change details
 		@Path("/changepower")
-		@POST
+		@PUT
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
 		public String changePassword(String s) {

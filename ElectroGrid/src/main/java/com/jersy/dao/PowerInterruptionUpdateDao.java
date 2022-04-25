@@ -17,9 +17,9 @@ public class PowerInterruptionUpdateDao {
 
 		try {
 
-			PreparedStatement ps = con.prepareStatement("select * from powerinterruptiondetails where interruptionid=? and date=?");
+			PreparedStatement ps = con.prepareStatement("select * from powerinterruptiondetails where interruptionid=?");
 			ps.setLong(1, powerInterruptionUpdateBean.getInterruptionid());
-			ps.setLong(2, powerInterruptionUpdateBean.getNewdate());
+			//ps.setLong(2, powerInterruptionUpdateBean.getNewdate());
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
@@ -42,9 +42,10 @@ public class PowerInterruptionUpdateDao {
 
 		try {
 
-			PreparedStatement ps = con.prepareStatement("update powerinterruptiondetails set date=? where interruptionid=?");
+			PreparedStatement ps = con.prepareStatement("update powerinterruptiondetails set date=? , location=? , description=?");
 			ps.setLong(1, powerInterruptionUpdateBean.getNewdate());
-			ps.setLong(2, powerInterruptionUpdateBean.getInterruptionid());
+			ps.setString(2, powerInterruptionUpdateBean.getNewlocation());
+			ps.setString(3, powerInterruptionUpdateBean.getNewdescription());
 			
 			
 			
