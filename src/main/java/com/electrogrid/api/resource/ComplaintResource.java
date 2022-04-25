@@ -1,9 +1,14 @@
 package com.electrogrid.api.resource;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.electrogrid.api.model.Complaint;
 import com.electrogrid.api.service.ComplaintService;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -48,5 +53,11 @@ public class ComplaintService {
 		
 	}
 
-
+	@Path("/deleteComplaintById/{id}")
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int deleteComplaint(@PathParam("id") int id) {
+		return service.deletetComplaint(id);
+		
+	}
 }

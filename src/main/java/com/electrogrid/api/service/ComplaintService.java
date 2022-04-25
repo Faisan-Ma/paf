@@ -105,5 +105,23 @@ public class ComplaintService {
 		return complaint;
 		
 	}
+
+	public int deleteComplaint(int id) {
+		String insert = "delete from complaint where id =?";
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(insert);
+			ps.setInt(1,id);
+			
+			ps.executeUpdate();
+		}catch(Exception e) {
+			System.out.println(e +"data deletion not sucessful");
+		}
+		
+		return id;
+		
+	}
+
+
 }
 
