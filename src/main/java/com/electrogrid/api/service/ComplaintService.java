@@ -70,6 +70,23 @@ public class ComplaintService {
 		
 	}
 
+	public ArrayList<Complaint> getComplaintById(int id) throws SQLException{
+		
+		ArrayList<Complaint> data = new ArrayList<Complaint>();
+		String select = "select * from complaint where id =?";
+		PreparedStatement ps = con.prepareStatement(select);
+		ps.setInt(1,id);
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			Complaint model = new Complaint();
+			
+			model.setMessage(rs.getString("message"));
+			model.setAccountNumber(rs.getInt("accountNumber"));		
+			data.add(model);		
+		}		
+		return data;	
+	}
 
 }
 
