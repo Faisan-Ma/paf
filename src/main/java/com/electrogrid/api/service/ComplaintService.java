@@ -3,6 +3,10 @@ package com.electrogrid.api.service;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.electrogrid.api.model.Complaint;
 
@@ -44,6 +48,28 @@ public class ComplaintService {
 		
 	}
 		
+	public ArrayList<Complaint> getComplaint() throws SQLException{
 		
+		ArrayList<Complaint> data = new ArrayList<Complaint>();
+		
+		String select = "select * from complaint";
+		PreparedStatement ps = con.prepareStatement(select);
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			Complaint model = new Complaint();
+			
+			model.setMessage(rs.getString("message"));
+			model.setAccountNumber(rs.getInt("accountNumber"));
+			
+			data.add(model);
+			
+		}
+		
+		return data;
+		
+	}
+
+
 }
 
