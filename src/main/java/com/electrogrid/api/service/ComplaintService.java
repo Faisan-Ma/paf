@@ -88,5 +88,22 @@ public class ComplaintService {
 		return data;	
 	}
 
+	public Complaint updateComplaint(Complaint complaint) {
+		String insert = "update complaint set message=? , accountNumber=? where id =?";
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(insert);
+			ps.setString(1, complaint.getMessage());
+			ps.setLong(2, complaint.getAccountNumber());
+			ps.setInt(3, complaint.getId());
+			
+			ps.executeUpdate();
+		} catch(Exception e) {
+			System.out.println(e + "data insert not sucessful");
+		}
+		
+		return complaint;
+		
+	}
 }
 

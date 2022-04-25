@@ -39,4 +39,14 @@ public class ComplaintService {
 		return service.getComplaintById(id);
 		
 	}
+
+	@Path("/updateComplaint")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Complaint updateComplaint(Complaint complaint) {
+		 return service.updatetcomplaint(complaint);
+		
+	}
+
+
 }
