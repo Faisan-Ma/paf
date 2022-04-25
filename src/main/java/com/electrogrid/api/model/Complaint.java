@@ -24,19 +24,19 @@ public class Complaint {
 		this.id = id;
 	}
 
-	public String getmessage() {
+	public String getMessage() {
 		return message;
 	}
 
-	public void setmessage(String message) {
+	public void setMessage(String message) {
 		this.message = message;
 	}
 
-	public int getaccountNumber() {
+	public int getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setaccountNumber(int accountNumber) {
+	public void setAccountNumber(int accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 }
