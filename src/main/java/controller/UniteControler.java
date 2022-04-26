@@ -1,5 +1,4 @@
 package controller;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,44 +10,58 @@ import model.PowerUnit;
 
 public class UniteControler {
 	
-	public String insertunite(int unitid, int accountNo, String CusName, int  unit, int amount)
-	{
+
+	public static String PowerUNite(PowerUnit rs)
 	
+	{
+		Connection con = DbConnect.connect();
 
-		String output = ""; 
-		try
-		{ 
-			Connection con = DbConnect.connect(); 
-			if (con == null) 
-			{
-				return "Error while connecting to the database for inserting.";
-				}
-			
-			// create a prepared statement
-			String query = " insert into orders(`unitid`,`accountNo`,`CusName`,`unit`,`amount`)" + " values (?, ?, ?, ?, ?)"; 
-			//PreparedStatement preparedStmt = con.prepareStatement(query);
+		try {
+
+			PreparedStatement ps1 = con.prepareStatement("select unitid from powerUnit where unitid=?");
+			ps1.setInt(1, rs.getUnitid());
+			ResultSet rrs = ps1.executeQuery();
+
+			if (rrs.next()) {
+				return "Already Exist";
+			} else {
+
 				
-				PreparedStatement ps = con.prepareStatement("query");
-				ps.setInt(1, unitid);
-				ps.setInt(2, accountNo);
-				ps.setString(3, CusName);
-				ps.setInt(4, unit);
-				ps.setInt(4, amount);
+				PreparedStatement ps = con.prepareStatement("insert into powerUnit values(?,?,?,?,?,?)");
+				ps.setInt(1, rs.getUnitid());
+				ps.setInt(2, rs.getAccountNo());
+				ps.setString(3, rs.getCusName());
+				ps.setInt(4, rs.getUnit());
+				ps.setString(5, rs.getMonth());
+				ps.setInt(6, rs.getAmount());
 			
 
-				ps.execute(); 
-				con.close(); 
-				output = "Order Inserted successfully";
-				} 
-			catch (Exception e) 
-			{ 
-				output = "Error while inserting the unite details."; 
-				System.err.println(e.getMessage()); 
-				} 
-			return output; 
+				int i = ps.executeUpdate();
 
-			
+				if (i > 0) {
+					return "success";
+				} else {
+					return "failed";
+				}
+
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return "fail";
+
 	}
+
+	private String unit;
 
 	
 	public String readUnite() 
@@ -77,6 +90,7 @@ public class UniteControler {
 				String accountNo = rs.getString("accountNo");
 				String CusName = rs.getString("CusName"); 
 				String unit = rs.getString("unit");
+				String month = rs.getString("unit");
 				String amount = rs.getString("amount");
 				
 				
@@ -108,7 +122,7 @@ public class UniteControler {
 	 return output; 
 	 } 
 	
-	public String updateunite(String unitid, String accountNo, String CusName, String  unit, String amount)
+	public String updateunite(String unitid, String accountNo, String CusName, String  month, String amount)
 	{
 		String output = ""; 
 		try
@@ -120,16 +134,18 @@ public class UniteControler {
 			} 
 			
 			// create a prepared statement
-			String query = "UPDATE orders SET Order_date=?,Project_ID=?,Project_name=?,Sponsor_ID=?,Budget=? WHERE Order_ID=?"; 
+			String query = "UPDATE powerUnit SET accountNo=?,CusName=?,CusName=?,month=?,amount=? WHERE unitid=?"; 
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			
 			// binding values
 			preparedStmt.setInt(1,Integer.parseInt(unitid));
 			preparedStmt.setInt(2,Integer.parseInt (accountNo));
 			preparedStmt.setString(3, CusName);
-			preparedStmt.setInt(4, Integer.parseInt( unit));
 			
-			preparedStmt.setInt(5, Integer.parseInt(amount));
+			preparedStmt.setInt(4, Integer.parseInt( unit));
+			preparedStmt.setString(5, month);
+			
+			preparedStmt.setInt(6, Integer.parseInt(amount));
 			
 			// execute the statement
 			preparedStmt.execute(); 
