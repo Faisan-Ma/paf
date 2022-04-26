@@ -9,16 +9,18 @@ import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import controller.UniteControler;
 import model.PowerUnit;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+//For JSON
+import com.google.gson.*;
+//For XML
+import org.jsoup.*;
+import org.jsoup.parser.*;
+import org.jsoup.nodes.Document;
 
 @Path("/powerUsage")
 
@@ -71,7 +73,7 @@ public class UniteService {
 	
 	//DELETE
 	@DELETE
-	@Path("/deletePowerusageById/{UnitId}  ")
+	@Path("/deletePowerusageById  ")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String deleteUnite(String unitData)
