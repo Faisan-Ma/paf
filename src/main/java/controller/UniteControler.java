@@ -11,7 +11,7 @@ import model.PowerUnit;
 public class UniteControler {
 	
 
-	public static String PowerUNite(PowerUnit rs)
+	public  String PowerUnite(PowerUnit rs)
 	
 	{
 		Connection con = DbConnect.connect();
@@ -77,7 +77,7 @@ public class UniteControler {
 			
 			// Prepare the html table to be displayed
 			output = "<table border='1'><tr><th>Unit ID</th>" + "<th>Account No</th>" + "<th>Customer Name</th>" + 
-			"<th>Power Unite</th>"+"<th>Amount</th>" + "<th>Update</th><th>Remove</th></tr>";
+			"<th>Power Unite</th>"+"<th>Power Month</th>"+"<th>Amount</th>" + "<th>Update</th><th>Remove</th></tr>";
 			
 			String query = "select * from orders"; 
 			Statement stmt = con.createStatement(); 
@@ -104,7 +104,7 @@ public class UniteControler {
 				
 				// buttons
 				output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>" 
-				+ "<td><form method='post' action='Orders.jsp'>" 
+				+ "<td><form method='post' action='Units.jsp'>" 
 						+ "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>" 
 				+ "<input name='itemID' type='hidden' value='" + unitid  
 				+ "'>" + "</form></td></tr>";
@@ -134,21 +134,21 @@ public class UniteControler {
 			} 
 			
 			// create a prepared statement
-			String query = "UPDATE powerUnit SET accountNo=?,CusName=?,CusName=?,month=?,amount=? WHERE unitid=?"; 
-			PreparedStatement preparedStmt = con.prepareStatement(query);
+			String query = "UPDATE powerUnit SET accountNo=?,CusName=?,unit=?,month=?,amount=? WHERE unitid=?"; 
+			PreparedStatement ps = con.prepareStatement(query);
 			
 			// binding values
-			preparedStmt.setInt(1,Integer.parseInt(unitid));
-			preparedStmt.setInt(2,Integer.parseInt (accountNo));
-			preparedStmt.setString(3, CusName);
+			ps.setInt(1,Integer.parseInt(unitid));
+			ps.setInt(2,Integer.parseInt (accountNo));
+			ps.setString(3, CusName);
 			
-			preparedStmt.setInt(4, Integer.parseInt( unit));
-			preparedStmt.setString(5, month);
+			ps.setInt(4, Integer.parseInt(unit));
+			ps.setString(5, month);
 			
-			preparedStmt.setInt(6, Integer.parseInt(amount));
+			ps.setInt(6, Integer.parseInt(amount));
 			
 			// execute the statement
-			preparedStmt.execute(); 
+			ps.execute(); 
 			con.close(); 
 			output = "Unite Updated successfully";
 			
