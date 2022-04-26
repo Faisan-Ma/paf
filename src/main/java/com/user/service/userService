@@ -1,0 +1,116 @@
+package com.user.service;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class userService {
+Connection con;
+
+	
+	public userService(){
+		
+		try {
+			String url =String.format("jdbc:mysql://localhost:3306/complaints");
+			String uname ="root";
+			String pwd = "root";
+			
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,uname,pwd);
+			
+		} catch(Exception e) {
+			System.out.println(e +"data insert not sucessful");
+		}
+	}
+
+	
+	public user addUser(user user) {
+		String insert = "insert into complaint(mesage,accountNumber) values(?,?) ";
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(insert);
+			ps.setString(1, user.getMessage());
+			ps.setLong(2, user.getAccountNumber());
+			
+			ps.execute();
+		} catch(Exception e) {
+			System.out.println(e +"data insert not sucessful");
+		}
+		
+		return user;
+		
+	}
+		
+	public ArrayList<user> getComplaint() throws SQLException{
+		
+		ArrayList<user> data = new ArrayList<user>();
+		
+		String select = "select * from complaint";
+		PreparedStatement ps = con.prepareStatement(select);
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			user model = new user();
+			
+			model.setMessage(rs.getString("message"));
+			model.setAccountNumber(rs.getInt("accountNumber"));
+			
+			data.add(model);
+			
+		}
+		
+		return data;
+		
+	}
+
+	public ArrayList<user> getComplaintById(int id) throws SQLException{
+		
+		ArrayList<user> data = new ArrayList<user>();
+		String select = "select * from complaint where id =?";
+		PreparedStatement ps = con.prepareStatement(select);
+		ps.setInt(1,id);
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			user model = new user();
+			
+			model.setMessage(rs.getString("message"));
+			model.setAccountNumber(rs.getInt("accountNumber"));		
+			data.add(model);		
+		}		
+		return data;	
+	}
+
+	public user updateUser(user user) {
+		String insert = "update complaint set message=? , accountNumber=? where id =?";
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(insert);
+			ps.setString(1, user.getMessage());
+			ps.setLong(2, user.getAccountNumber());
+			ps.setInt(3, user.getId());
+			
+			ps.executeUpdate();
+		} catch(Exception e) {
+			System.out.println(e + "data insert not sucessful");
+		}
+		
+		return user;
+		
+	}
+
+	public int deleteComplaint(int id) {
+		String insert = "delete from complaint where id =?";
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(insert);
+			ps.setInt(1,id);
+			
+			ps.executeUpdate();
+		}catch(Exception e) {
+			System.out.println(e +"data deletion not sucessful");
+		}
+		
+		return id;
+		
+	}
+}
